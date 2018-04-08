@@ -6,12 +6,28 @@
 	</head>
 	<body>
 		<form method="POST" action="new_user.php">
-				<label for="login">Name :</label><input id="login" type="text" name="login">
-				<br />
-				<label for="mail">Mail :</label><input id="mail" type="email" name="mail">
-				<br />
-				<label for="pass">Password : </label><input id="pass" type="PASSWORD" name="passwd">
-				<br />
+			<tr>
+			<td><label for="login">Nom :</label></td>
+			<td><input id="login" type="text" name="login"></td>
+			</tr>
+			<tr>
+			<td><label for="mail">Mail :</label></td>
+			<td><input id="mail" type="email" name="mail"></td>
+			</tr>
+			<tr>
+				<td><label for="mailconf">Confirmation Mail :</label></td>
+				<td><input id="mailconf" type="email" name="mailconf"></td>
+			</tr>
+			<tr>	
+			<td><label for="pass">Mot De Passe : </label></td>
+			<td><input id="pass" type="PASSWORD" name="passwd"></td>
+			</tr>
+			<tr>	
+					<td><label for="pass2">Confirmation Mot De Passe : </label></td>
+					<td><input id="pass2" type="PASSWORD" name="passwd2"></td>
+					</tr>
+			<br >
+			<br >	
 				<input type="submit" name="submit" value="send">
 			</form>
 	</body>

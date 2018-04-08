@@ -6,7 +6,7 @@ if (isset($_GET['section'])){
 else
 	$section = "";
 
-if (isset($_POST['submit'], $_POST('mail'))
+if (isset($_POST['submit'], $_POST['mail']))
 {
 	if (!empty($_POST['mail']))
 	{
@@ -33,14 +33,15 @@ if (isset($_POST['submit'], $_POST('mail'))
 				if ($mail_recup_exist == 1)
 				{
 					$insert = $bdd->prepare('UPDATE recuperation SET code = ? WHERE mail = ?');
-					$insert->execute(array($code, $mail))
+					$insert->execute(array($code, $mail));
 				}
 				else
 				{
 					$insert = $bdd->prepare('INSERT INTO recuperation(mail, code) VALUES (?, ?)');
-					$insert->execute(array($mail, $code))
+					$insert->execute(array($mail, $code));
 
 				}
+			}
 			else
 				$error = "Email does't exist";
 		}
@@ -89,12 +90,11 @@ if (isset($_POST['submit'], $_POST('mail'))
 			</form>
 			<?php }?>
 			<?php if(isset($error)){echo '<span style="color:red">'.$error.'</span>';} ?>
-	}
 	</body>
 </html>
 
 <?php
-	if (isset($_POST['verif_submit'], $_POST('verif_code'))
+	if (isset($_POST['verif_submit'], $_POST['verif_code']))
 	{
 		if (!empty($_POST['verif_code']))
 		{
@@ -114,7 +114,7 @@ if (isset($_POST['submit'], $_POST('mail'))
 		else
 			$error = "Enter Your Password Of Confirmation";
 	}
-	if (isset($_POST['change_submit'])
+	if (isset($_POST['change_submit']))
 	{
 		if (isset($_POST['conf']) && isset($_POST['changemdp']))
 		{
@@ -126,10 +126,10 @@ if (isset($_POST['submit'], $_POST('mail'))
 					$mdp = sha1($mdp);
 					$ins_mdp = $bdd->prepare('UPDATE mmbres SET mot_de_passe = ? WHERE mail = ?');
 					$ins_mdp->execute(array($mdp, $_SESSION['mail']));
-					header('location:home.html')
+					header('location:home.html');
 				}
 				else
-					$error = "Vos Mots de passes ne correspondent pas"
+					$error = "Vos Mots de passes ne correspondent pas";
 			}
 			else
 				$error = "Veuillez remplir tous les champs";
@@ -139,4 +139,4 @@ if (isset($_POST['submit'], $_POST('mail'))
 	}
 
 
-<?
+?>
