@@ -9,6 +9,7 @@ if (isset($_GET['id']) AND $_GET['id'] > 0)
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
     $_SESSION['user'] = $userinfo['pseudo'];
+    $_SESSION['id'] = $getid;
     //traitement image
     if (isset($_FILES['image']) AND !empty($_FILES['image']['name']))
     {
@@ -55,8 +56,8 @@ if (isset($_GET['id']) AND $_GET['id'] > 0)
         {?>
         <img src=<?php echo $chemin;?> width="100px" height = "100px">    
         <?php } ?>
-    <a href=".edition.php"> Editer Mon Profil </a>
-    <a href=".deconection.php">Se Deconnecter </a>
+    <a href="edition.php"> Editer Mon Profil </a>
+    <a href="deconection.php">Se Deconnecter </a>
     <label>Prendre une Photo</label>
     <form method"post" action="" enctype="multipart/form-data">
         <input type="file" name="image" />

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../config/connection.php";
+include "../config/conection.php";
 if (isset($_POST['submit']))
 {
 	$pseudo = htmlspecialchars($_POST['pseudo']);
@@ -8,7 +8,7 @@ if (isset($_POST['submit']))
 	if (!empty($pseudo) AND !empty($mdp))
 	{
 		$requser = $bdd->prepare("SELECT * FROM membres WHERE pseudo = ? AND mdp = ?");
-		$requser = $bdd->execute(array($pseudo, $mdp));
+		$requser->execute(array($pseudo, $mdp));
 		$userexist = $requser->rowCount();
 		if ($userexist == 1)
 		{
@@ -57,7 +57,7 @@ if (isset($_POST['submit']))
 			?>
 		</div>
 		<div>
-			<a href="./register.html" alt="Inscription" title="Inscription"><H1>Register</H1></a>
+			<a href="register.php" alt="Inscription" title="Inscription"><H1>S'inscrire																																																					</H1></a>
 		</div>
 	</body>
 </html>

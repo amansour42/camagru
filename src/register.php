@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "mail.php";
 include '../config/conection.php';
 if (isset($_POST['submit']))
@@ -16,7 +15,7 @@ if (isset($_POST['submit']))
 			if ($pseudolen <= 255)
 			{
 				$reqpseudo = $bdd->prepare("SELECT * FROM membres WHERE pseudo = ?");
-				$repseudo->execute(array($pseudo));
+				$reqpseudo->execute(array($pseudo));
 				$pseudoexist = $reqpseudo->rowCount();
 				if ($pseudoexist == 0)
 				{
@@ -39,7 +38,6 @@ if (isset($_POST['submit']))
 									}
 									$insertmbr = $bdd->prepare("INSERT INTO membres(pseudo, mail, mdp, confirmekey) VALUES (?, ?, ?, ?)");
 									$insertmbr->execute(array($pseudo, $mail, $mdp, $key));
-									$_SESSION['user'] = $pseudo;
 									$message = "
     <html>
     <body>
@@ -52,8 +50,7 @@ if (isset($_POST['submit']))
     </html>
     ";
 									mail($mail, "Confirmation De Creation De Compte", $message, $header);
-									header('Location: index.php');
-
+									header('Location: ../index.php');
 								}
 								else
 									$error = "Vos mots de passes ne correspondent pas !";

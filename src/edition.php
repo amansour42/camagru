@@ -1,31 +1,32 @@
 <?php
 session_start();
+include "../config/conection.php";
 if (isset($_SESSION['id']))
 {
     $requser = $bdd->prepare("SELECT * FROM membres WHERE id = ?");
-    $requser->execute(array($_SESSIO['id']));
+    $requser->execute(array($_SESSION['id']));
     $user = $requser->fetch();
 
     if (isset($_POST['pseudo']) AND !empty($_POST['pseudo']) AND $_POST['pseudo'] != $user['pseudo'])
     {
-        $new = htmlspecialchars($_PSOT['pseudo']);
-        $requser = $bdd->prepare("UPDATE FROM membres SET pseudo = ? WHERE id = ?");
-        $requser->execute(array($new, $_SEESION['id']));
-        header("Location: profil.php?id="._SESSION['id']);
+        $new = htmlspecialchars($_POST['pseudo']);
+        $requser = $bdd->prepare("UPDATE membres SET pseudo = ? WHERE id = ?");
+        $requser->execute(array($new, $_SESSION['id']));
+        header("Location: user_home.php?id=".$_SESSION['id']);
     }
     if (isset($_POST['mail']) AND !empty($_POST['mail']) AND $_POST['mail'] != $user['mail'])
     {
-        $new = htmlspecialchars($_PSOT['mail']);
-        $requser = $bdd->prepare("UPDATE FROM membres SET mail = ? WHERE id = ?");
-        $requser->execute(array($new, $_SEESION['id']));
-        header("Location: profil.php?id="._SESSION['id']);
+        $new = htmlspecialchars($_POST['mail']);
+        $requser = $bdd->prepare("UPDATE membres SET mail = ? WHERE id = ?");
+        $requser->execute(array($new, $_SESSION['id']));
+        header("Location: user_home.php?id=".$_SESSION['id']);
     }
     if (isset($_POST['mdp']) AND !empty($_POST['mdp']))
     {
-        $new = sha1($_PSOT['mdp']);
-        $requser = $bdd->prepare("UPDATE FROM membres SET mdp = ? WHERE id = ?");
-        $requser->execute(array($new, $_SEESION['id']));
-        header("Location: profil.php?id="._SESSION['id']);
+        $new = sha1($_POST['mdp']);
+        $requser = $bdd->prepare("UPDATE membres SET mdp = ? WHERE id = ?");
+        $requser->execute(array($new, $_SESSION['id']));
+        header("Location: user_home.php?id=".$_SESSION['id']);
     }
 ?>
 

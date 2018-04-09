@@ -13,11 +13,11 @@ function setup($dbh,$dbname)
 	$result = $dbh->exec($sql);
       //creation de la table membres
 	$sql = "CREATE TABLE membres (
-      user_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
       pseudo VARCHAR(255) NOT NULL,
       mdp VARCHAR(255) NOT NULL,
       mail VARCHAR(255) NOT NULL,
-      confirmemail VARCHAR(255),
+      confirmekey VARCHAR(255),
       Confirme INT(1)
       )";
 	$result = $dbh->exec($sql);
@@ -25,9 +25,9 @@ function setup($dbh,$dbname)
 	$sql = "CREATE TABLE images (
       img_id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
       img_path VARCHAR(255) NOT NULL,
-      user_id int NOT NULL,
+      id int NOT NULL,
       img_date DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-      CONSTRAINT fk_img_user FOREIGN KEY(user_id) REFERENCES membres(user_id)
+      CONSTRAINT fk_img_user FOREIGN KEY(id) REFERENCES membres(id)
 		)";
 	$result = $dbh->exec($sql);
       
@@ -46,12 +46,12 @@ try{
                 $DB_PASSWORD
             );
       $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      setup($db,$DB_NAME);
+      setup($db, $DB_NAME);
       echo 'setup completed'.PHP_EOL;
 }
 catch(PDOException $e)
 {
-            echo $e->getMessage();
-            die();
+      echo $e->getMessage();
+      die();
 }
 ?>

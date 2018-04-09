@@ -1,13 +1,12 @@
 <?php
-include '../config/database.php';
+include 'database.php';
 try{
-    $bdd = new PDO(  $DB_DSN,
+    $param = $DB_DSN."dbname=".$DB_NAME;
+    $bdd = new PDO(  $param,
               $DB_USER,
               $DB_PASSWORD
           );
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    setup($bdd,$DB_NAME);
-    echo 'setup completed'.PHP_EOL;
 }
 catch(PDOException $e)
 {
