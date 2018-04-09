@@ -14,9 +14,11 @@ function setup($dbh,$dbname)
       //creation de la table membres
 	$sql = "CREATE TABLE membres (
       user_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      login VARCHAR(255) NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      mail VARCHAR(255) NOT NULL
+      pseudo VARCHAR(255) NOT NULL,
+      mdp VARCHAR(255) NOT NULL,
+      mail VARCHAR(255) NOT NULL,
+      confirmemail VARCHAR(255),
+      Confirme INT(1)
       )";
 	$result = $dbh->exec($sql);
       //creation de la base images
