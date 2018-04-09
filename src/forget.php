@@ -65,7 +65,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 		<?php if($section == 'code') {?>
 		Recuperation de mot de passe pour <?= $_SESSION['mail'] ?>
 		<br />
-		<form method="POST" action=".">
+		<form method="POST" action="forget.php">
 				<label for="code">Password :</label><input id="code" type="text" name="verif_code" placeholder="Code de recuperation">
 				<br />
 				<br />
@@ -124,7 +124,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 				if ($mdp == $mdpc)
 				{
 					$mdp = sha1($mdp);
-					$ins_mdp = $bdd->prepare('UPDATE mmbres SET mot_de_passe = ? WHERE mail = ?');
+					$ins_mdp = $bdd->prepare('UPDATE membres SET password = ? WHERE mail = ?');
 					$ins_mdp->execute(array($mdp, $_SESSION['mail']));
 					header('location:home.html');
 				}
@@ -137,6 +137,4 @@ if (isset($_POST['submit'], $_POST['mail']))
 		else
 			$error = "Veuillez remplir tous les champs";
 	}
-
-
 ?>
