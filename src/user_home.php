@@ -29,7 +29,7 @@ if (isset($_GET['id']) AND $_GET['id'] > 0)
                 }
                 else
                 {
-                    $error = "Erreur durant l'importation de votre profil";
+                    $error = "Erreur durant l'importation de votre image";
                 }
 
             }
