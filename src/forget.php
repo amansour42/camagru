@@ -22,7 +22,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 			{
 				$pseudo = $mailexist->fetch();
 				$pseudo = $pseudo['pseudo'];
-				$_SEESION['mail'] = $mail;
+				$_SESSION['mail'] = $mail;
 				$code = "";
 				for($i = 0; $i < 8 ; $i++)
 				{
@@ -40,7 +40,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 				</body>
 				</html>';
 				mail($mail, "Nouveau Mot De Passe", $message, $header);
-				$mail_recup_exist = $bdd->prepare('SELECT INTO recuperation WHERE mail = ?');
+				$mail_recup_exist = $bdd->prepare('SELECT * FROM recuperation WHERE mail = ?');
 				$mail_recup_exist->execute(array($mail));
 				$mail_recup_exist = $mail_recup_exist->rowCount();
 				if ($mail_recup_exist == 1)
@@ -54,6 +54,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 					$insert->execute(array($mail, $code));
 
 				}
+				header('Location:forget.php?section=code');
 			}
 			else
 				$error = "Mail n'existe pas";
@@ -79,10 +80,10 @@ if (isset($_POST['submit'], $_POST['mail']))
 		Recuperation de mot de passe pour <?= $_SESSION['mail'] ?>
 		<br />
 		<form method="POST" action="">
-				<label for="code">Password :</label><input id="code" type="text" name="verif_code" placeholder="Code de recuperation">
+				<label for="code">Mot De Passe :</label><input id="code" type="text" name="verif_code" placeholder="Code de recuperation">
 				<br />
 				<br />
-				<input type="submit" name="verif_submit" value="send">
+				<input type="submit" name="verif_submit" value="Envoyer">
 			</form>
 			<?php } else if ($section =='changemdp') {?>
 			Nouveau Mot de passe pour  <?= $_SESSION['mail'] ?>
@@ -92,7 +93,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 				<br />
 				<br />
 				<label for="conf">Confirmation :</label><input id="conf" type="Password" name="conf" placeholder="Confirmation de mot de passe">
-				<input type="submit" name="change_submit" value="send">
+				<input type="submit" name="change_submit" value="Envoyer">
 			</form>
 		<?php } else { ?>
 		<form method="POST" action="">
@@ -107,19 +108,21 @@ if (isset($_POST['submit'], $_POST['mail']))
 </html>
 
 <?php
-	if (isset($_POST['verif_submit'], $_POST['verif_code']))
+	if (isset($_POST['verif_submit']) AND isset($_POST['verif_code']))
 	{
 		if (!empty($_POST['verif_code']))
 		{
 			$verif_code = htmlspecialchars($_POST['verif_code']);
+			echo $verif_code;
 			$verif_req = $bdd->prepare('SELECT * FROM recuperaion where mail = ? AND code = ?');
-			$veriv_req->execute(array($_SESSION['mail'], $verif_code));
-			if ($verif_req == 1)
+			$verif_req->execute(array($_SESSION['mail'], $verif_code));
+			print_r($verif_req);
+			$req = $verif_req->rowCount();
+			if ($req == 1)
 			{
 				$del_req = $bdd->prepare('DELETE FROM recuperation WHERE mail = ?');
 				$del_req->execute($array($_SESSION['mail']));
 				header('location:forget.php?section=changemdp');
-
 			}
 			else
 				$error = "Mot De Passe de Confirmation est Invalide";
