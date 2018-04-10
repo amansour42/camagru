@@ -67,61 +67,18 @@ if (isset($_POST['submit'], $_POST['mail']))
 		$error = "Veuillez entrer votre mail";
 	}
 }
-
-?>
-
-<html>
-	<head>
-		<TITLE>Forget Password</TITLE>
-		<link rel="stylesheet" href="../style/home.css" />
-	</head>
-	<body>
-		<?php if($section == 'code') {?>
-		Recuperation de mot de passe pour <?= $_SESSION['mail'] ?>
-		<br />
-		<form method="POST" action="">
-				<label for="code">Mot De Passe :</label><input id="code" type="text" name="verif_code" placeholder="Code de recuperation">
-				<br />
-				<br />
-				<input type="submit" name="verif_submit" value="Envoyer">
-			</form>
-			<?php } else if ($section =='changemdp') {?>
-			Nouveau Mot de passe pour  <?= $_SESSION['mail'] ?>
-		<br /><br />
-		<form method="POST" action="">
-				<label for="mdp">Password :</label><input id="mdp" type="Password" name="changemdp" placeholder="Nouveau mot de passe">
-				<br />
-				<br />
-				<label for="conf">Confirmation :</label><input id="conf" type="Password" name="conf" placeholder="Confirmation de mot de passe">
-				<input type="submit" name="change_submit" value="Envoyer">
-			</form>
-		<?php } else { ?>
-		<form method="POST" action="">
-				<label for="mail">Mail :</label><input id="mail" type="email" name="mail" placeholder="Your Email">
-				<br />
-				<br />
-				<input type="submit" name="submit" value="Envoyer">
-			</form>
-			<?php }?>
-			<?php if(isset($error)){echo '<span style="color:red">'.$error.'</span>';} ?>
-	</body>
-</html>
-
-<?php
 	if (isset($_POST['verif_submit']) AND isset($_POST['verif_code']))
 	{
 		if (!empty($_POST['verif_code']))
 		{
 			$verif_code = htmlspecialchars($_POST['verif_code']);
-			echo $verif_code;
-			$verif_req = $bdd->prepare('SELECT * FROM recuperaion where mail = ? AND code = ?');
+			$verif_req = $bdd->prepare('SELECT * FROM recuperation where mail = ? AND code = ?');
 			$verif_req->execute(array($_SESSION['mail'], $verif_code));
-			print_r($verif_req);
 			$req = $verif_req->rowCount();
 			if ($req == 1)
 			{
 				$del_req = $bdd->prepare('DELETE FROM recuperation WHERE mail = ?');
-				$del_req->execute($array($_SESSION['mail']));
+				$del_req->execute(array($_SESSION['mail']));
 				header('location:forget.php?section=changemdp');
 			}
 			else
@@ -140,7 +97,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 				if ($mdp == $mdpc)
 				{
 					$mdp = sha1($mdp);
-					$ins_mdp = $bdd->prepare('UPDATE membres SET password = ? WHERE mail = ?');
+					$ins_mdp = $bdd->prepare('UPDATE membres SET mdp = ? WHERE mail = ?');
 					$ins_mdp->execute(array($mdp, $_SESSION['mail']));
 					header('location: home.php');
 				}
@@ -154,3 +111,41 @@ if (isset($_POST['submit'], $_POST['mail']))
 			$error = "Veuillez remplir tous les champs";
 	}
 ?>
+
+<html>
+	<head>
+		<TITLE>Forget Password</TITLE>
+		<link rel="stylesheet" href="../style/home.css" />
+	</head>
+	<body>
+		<?php if($section == 'code') {?>
+		<h1>Recuperation de mot de passe pour <?= $_SESSION['mail'] ?></h1>
+		<br />
+		<form method="POST" action="">
+				<label for="code">Mot De Passe :</label><input id="code" type="text" name="verif_code" placeholder="Code de recuperation">
+				<br />
+				<br />
+				<input type="submit" name="verif_submit" value="Envoyer">
+			</form>
+			<?php } else if ($section =='changemdp') {?>
+				<h1>Nouveau Mot de passe pour  <?= $_SESSION['mail'] ?></h1>
+		<br /><br />
+		<form method="POST" action="">
+				<label for="mdp">Mot De Passe :</label><input id="mdp" type="Password" name="changemdp" placeholder="Nouveau mot de passe">
+				<br />
+				<br />
+				<label for="conf">Confirmation :</label><input id="conf" type="Password" name="conf" placeholder="Confirmation de mot de passe">
+				<br /><br />
+				<input type="submit" name="change_submit" value="Envoyer">
+			</form>
+		<?php } else { ?>
+		<form method="POST" action="">
+				<label for="mail">Mail :</label><input id="mail" type="email" name="mail" placeholder="Your Email">
+				<br />
+				<br />
+				<input type="submit" name="submit" value="Envoyer">
+			</form>
+			<?php }?>
+			<?php if (isset($error)) echo '<p style="color:red;text-align:center">'.$error.'</p>'; ?>
+	</body>
+</html>
