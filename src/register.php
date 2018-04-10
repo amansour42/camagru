@@ -38,17 +38,17 @@ if (isset($_POST['submit']))
 									}
 									$insertmbr = $bdd->prepare("INSERT INTO membres(pseudo, mail, mdp, confirmekey) VALUES (?, ?, ?, ?)");
 									$insertmbr->execute(array($pseudo, $mail, $mdp, $key));
-									$message = "
-    <html>
-    <body>
-    <div align='center'>
-    <a href='confirmation.php ?pseudo='.urlencode($pseudo).'&key='.$key>Confirmez Votre Compte</a>
-    J\'ai envoye ce mail avec PHP !
-    <br />
-    </div>
-    </body>
-    </html>
-    ";
+									$string = 'pseudo='.urlencode($pseudo).'&key='.$key;
+									$message='<html>
+									<head>
+									<title>Confirmez Votre Mail :)</title>
+									</head>
+									<body>
+									<div align="center">
+										<a href="http://localhost:8080/camagru/src/confirmation.php?'.$string.'"> Confirmez Votre Compte </a>
+									</div>
+									</body>
+									</html>';
 									mail($mail, "Confirmation De Creation De Compte", $message, $header);
 									header('Location: ../index.php');
 								}
@@ -98,11 +98,11 @@ if (isset($_POST['submit']))
 			</tr>
 			<tr>	
 			<td align="right"><label for="pass">Mot De Passe : </label></td>
-			<td><input id="pass" type="PASSWORD" name="passwd" placholder="Votre Mot de passe"></td>
+			<td><input id="pass" type="password" name="passwd" placholder="Votre Mot de passe"></td>
 			</tr>
 			<tr>	
 					<td align="right"><label for="pass2">Confirmation Mot De Passe : </label></td>
-					<td><input id="pass2" type="PASSWORD" name="passwd2" placholder="Votre Mot de passe" ></td>
+					<td><input id="pass2" type="password" name="passwd2" placholder="Votre Mot de passe" ></td>
 			</tr>
 			<tr>
 				<td> <br /></td>

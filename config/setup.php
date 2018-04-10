@@ -18,7 +18,7 @@ function setup($dbh,$dbname)
       mdp VARCHAR(255) NOT NULL,
       mail VARCHAR(255) NOT NULL,
       confirmekey VARCHAR(255),
-      Confirme INT(1)
+      confirme INT(1) default 0
       )";
 	$result = $dbh->exec($sql);
       //creation de la base images

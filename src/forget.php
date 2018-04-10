@@ -1,5 +1,7 @@
 <?php
 session_start();
+include "mail.php";
+include "../config/conection.php";
 if (isset($_GET['section'])){
 	$section = htmlspecialchars($_GET['section']);
 }
@@ -15,7 +17,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 		{
 			$mailexist = $bdd->prepare('SELECT id,pseudo FROM membres WHERE mail = ?');
 			$mailexist->execute(array($mail));
-			$mailexist_count = $mailexist->rowcount();
+			$mailexist_count = $mailexist->rowCount();
 			if ($mailexist_count == 1)
 			{
 				$pseudo = $mailexist->fetch();
@@ -24,10 +26,21 @@ if (isset($_POST['submit'], $_POST['mail']))
 				$code = "";
 				for($i = 0; $i < 8 ; $i++)
 				{
-					$code .= mt_rabd(0, 9);
+					$code .= mt_rand(0, 9);
 
 				}
-				$mail_recup_exists = $bdd->prepare('SELECT INTO recuperation WHERE mail = ?');
+				$message='<html>
+				<head>
+				<title>Votre Nouveau De Passe Pour Camagru :)</title>
+				</head>
+				<body>
+				<div align="center">
+				<p> Votre nouveau mot de passe : <br/>'.$code.'</p>
+				</div>
+				</body>
+				</html>';
+				mail($mail, "Nouveau Mot De Passe", $message, $header);
+				$mail_recup_exist = $bdd->prepare('SELECT INTO recuperation WHERE mail = ?');
 				$mail_recup_exist->execute(array($mail));
 				$mail_recup_exist = $mail_recup_exist->rowCount();
 				if ($mail_recup_exist == 1)
@@ -43,14 +56,14 @@ if (isset($_POST['submit'], $_POST['mail']))
 				}
 			}
 			else
-				$error = "Email does't exist";
+				$error = "Mail n'existe pas";
 		}
 		else
-			$error = "Invalid Email";
+			$error = "Mail invalide";
 	}
 	else
 	{
-		$error = "Please Enter Your Email";
+		$error = "Veuillez entrer votre mail";
 	}
 }
 
@@ -65,7 +78,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 		<?php if($section == 'code') {?>
 		Recuperation de mot de passe pour <?= $_SESSION['mail'] ?>
 		<br />
-		<form method="POST" action="forget.php">
+		<form method="POST" action="">
 				<label for="code">Password :</label><input id="code" type="text" name="verif_code" placeholder="Code de recuperation">
 				<br />
 				<br />
@@ -74,7 +87,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 			<?php } else if ($section =='changemdp') {?>
 			Nouveau Mot de passe pour  <?= $_SESSION['mail'] ?>
 		<br /><br />
-		<form method="POST" action=".">
+		<form method="POST" action="">
 				<label for="mdp">Password :</label><input id="mdp" type="Password" name="changemdp" placeholder="Nouveau mot de passe">
 				<br />
 				<br />
@@ -82,11 +95,11 @@ if (isset($_POST['submit'], $_POST['mail']))
 				<input type="submit" name="change_submit" value="send">
 			</form>
 		<?php } else { ?>
-		<form method="POST" action=".">
+		<form method="POST" action="">
 				<label for="mail">Mail :</label><input id="mail" type="email" name="mail" placeholder="Your Email">
 				<br />
 				<br />
-				<input type="submit" name="submit" value="send">
+				<input type="submit" name="submit" value="Envoyer">
 			</form>
 			<?php }?>
 			<?php if(isset($error)){echo '<span style="color:red">'.$error.'</span>';} ?>
@@ -109,10 +122,10 @@ if (isset($_POST['submit'], $_POST['mail']))
 
 			}
 			else
-				$error = "Invalid Code";
+				$error = "Mot De Passe de Confirmation est Invalide";
 		}
 		else
-			$error = "Enter Your Password Of Confirmation";
+			$error = "Veuillez entrez votre Mot De Passe De confirmation !";
 	}
 	if (isset($_POST['change_submit']))
 	{
@@ -126,7 +139,7 @@ if (isset($_POST['submit'], $_POST['mail']))
 					$mdp = sha1($mdp);
 					$ins_mdp = $bdd->prepare('UPDATE membres SET password = ? WHERE mail = ?');
 					$ins_mdp->execute(array($mdp, $_SESSION['mail']));
-					header('location:home.html');
+					header('location: home.php');
 				}
 				else
 					$error = "Vos Mots de passes ne correspondent pas";

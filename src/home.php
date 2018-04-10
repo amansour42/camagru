@@ -13,11 +13,15 @@ if (isset($_POST['submit']))
 		if ($userexist == 1)
 		{
 			$userinfo = $requser->fetch();
-			$_SESSION['id'] = $userinfo['id'];
-			$_SESSION['user'] = $userinfo['pseudo'];
-			$_SESSION['mail'] = $userinfo['mail'];
-			header("Location: user_home.php?id=".$_SESSION['id']);
-
+			if ($userinfo['confirme'] == 1)
+			{
+				$_SESSION['id'] = $userinfo['id'];
+				$_SESSION['user'] = $userinfo['pseudo'];
+				$_SESSION['mail'] = $userinfo['mail'];
+				header("Location: user_home.php?id=".$_SESSION['id']);
+			}
+			else
+				$error = "Vous devez confirmez votre compte !".$userinfo['confirme'];
 		}
 		else
 			$error = "Mauvais Mail ou Mot De passe !";
@@ -49,7 +53,7 @@ if (isset($_POST['submit']))
 				<br />
 				<br />
 				<input class="ok" type="submit" name="submit" value="OK">
-				<a href="./forget.php" alt="forget" title="forget your password ?"><h3>forget your password ?</h3></a>
+				<a href="./forget.php" alt="forget" title="Mot De Passe Oublié ?" align="center"><h3>Mot De Passe Oublié ?</h3></a>
 			</form>
 			<?php
 				if (isset($error))

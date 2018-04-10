@@ -16,7 +16,8 @@ if (isset($_GET['pseudo'], $_GET['key']) AND !empty($_GET['pseudo']) AND !empty(
         {
             $updateuser = $bdd->prepare("UPDATE membres SET confirme = 1 WHERE pseudo = ? AND confirmekey = ?");
             $updateuser->execute(array($pseudo, $key));
-            echo "Votre compte a ete bien confirme";
+            echo "Votre compte a ete bien créé !";
+            echo '<html><head></head><body><div align="center"><a href="home.php">Retour A Camagru</a></div></body></html>';
         }
         else
             echo "Votre compte existe deja !";
