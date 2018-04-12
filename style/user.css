@@ -1,7 +1,11 @@
 body{
-    background-color:rgba(9, 9, 161, 0.829);
+    /*background-color:rgba(9, 9, 161, 0.829);*/
 }
-
+both{
+    width:400px;
+    background-color:#ccc;
+    border: 10px solid #ddd;
+}
 .right{
    position:absolute;
    top:150px;

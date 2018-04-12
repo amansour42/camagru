@@ -48,23 +48,27 @@ if (isset($_GET['id']) AND $_GET['id'] > 0)
 <head>
     <meta charset="utf-8" />
     <title>Page De Profil</title>
+    <META HTTP-EQUIV="refresh" CONTENT="10">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../style/home.css" />
+    <script src="../js/webcam.js"></script>
     <link rel="stylesheet" href="../style/user.css" />
+    <link rel="stylesheet" href="../style/home.css" />
 </head>
 <body>
 <div class="first">
         <a class="right" href="edition.php"> Editer Mon Profil </a>
         <img class="logo" src="../img/logo42.png" alt="logo42" title="42">
         <a class= "left" href="deconection.php">Se Deconnecter </a>
-	</div>
+</div>
     <?php
         if (isset($_FILES['image']) AND !empty($_FILES['image']))
         {?>
         <img src=<?php echo $chemin;?> width="100px" height = "100px">    
-        <?php } ?>
-    
-    <label>Prendre une Photo</label>
+    <?php } ?>
+    <button onclick="active_webcam();">Use your webcam</button>
+ 
+    </div>
     <form method"post" action="" enctype="multipart/form-data">
         <input type="file" name="image" />
         <input type="submit" name= "submit" value="envoyer" />
