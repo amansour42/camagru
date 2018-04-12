@@ -28,7 +28,7 @@ if (isset($_POST['submit']))
 
 	}
 	else
-		$error = "Tous les camps doivent etre remplis !";
+		$error = "Tous les champs doivent etre remplis !";
 }
 
 ?>
@@ -39,14 +39,18 @@ if (isset($_POST['submit']))
 		<meta name="keywords" content="HTML,CSS,PHP,JavaScript,MySql">
 		<meta name="author" content="Amina Mansour">
 		<link rel="stylesheet" href="../style/home.css" />
+		<meta name="viewport" content="width=device-width initial-scale=1.0" />
 	</head>
 	<body>
 		<div class="first">
-			<img src="../img/logo42.jpg" alt="logo42" title="42">
+			<img class="logo" src="../img/logo42.png" alt="logo42" title="42">
 		</div>
-		<h1>Bienvenue A Camagru</h1>
 		<div class="second">
+			<h1>Bienvenue A Camagru</h1>
+			
 			<form method="POST" action="">
+				<img class="login" src="../img/bas.png" alt="login" title="login">
+				<br /><br />
 				<label for="login"> Pseudo : </label><input id = "login" type="text" name="pseudo">
 				<br />
 				<label for="passwd"> Mot De passe : </label><input id="passwd" type="password" name="passwd">
@@ -54,14 +58,12 @@ if (isset($_POST['submit']))
 				<br />
 				<input class="ok" type="submit" name="submit" value="OK">
 				<a href="./forget.php" alt="forget" title="Mot De Passe Oublié ?" align="center"><h3>Mot De Passe Oublié ?</h3></a>
+				<a href="register.php" alt="Inscription" title="Inscription"><h3>S'inscrire</h3></a>
 			</form>
 			<?php
 				if (isset($error))
-					echo $error;
+					echo '<p style="color:red;dislay:block" align="center">'.$error.'</p>';
 			?>
-		</div>
-		<div>
-			<a href="register.php" alt="Inscription" title="Inscription"><H1>S'inscrire																																																					</H1></a>
 		</div>
 	</body>
 </html>

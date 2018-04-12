@@ -79,10 +79,19 @@ if (isset($_POST['submit']))
 <html>
 	<head>
 		<TITLE>Registration</TITLE>
-		<link rel="stylesheet" href="../style/home.css" />
+		<link rel="stylesheet" href="../style/register.css" />
+		<meta name="viewport" content="width=device-width initial-scale=1.0" />
+		<link rel="stylesheet" href="../style/register.css" />
 	</head>
 	<body>
-		<form method="POST" action="">
+		<div class="first">
+		<img class="logo" src="../img/logo42.png" alt="logo42" title="42">
+		</div>
+		<div class="second">
+		<table align="center">
+		<tr>
+		<td><img class="fleche" src="../img/fleche.png" alt="inscription" title="inscription"></td>
+		<td><form method="POST" action="">
 			<table>
 			<tr>
 			<td align="right"><label for="login">Nom :</label></td>
@@ -105,15 +114,25 @@ if (isset($_POST['submit']))
 					<td><input id="pass2" type="password" name="passwd2" placholder="Votre Mot de passe" ></td>
 			</tr>
 			<tr>
+				<td><br/></td>
+			</tr>
+			<tr>
 				<td> <br /></td>
 				<td><input type="submit" name="submit" value="Envoyer"></td>
 			</tr>
 			</table>
+			<br />
+			<br />
+			<img class="inscrip" src="../img/inscrip.png" alt="inscription" title="inscription">
 			</form>
+			</td>
+</tr>
+</table>
+		<div>
 			<?php
 			if (isset($error))
 			{
-				echo '<font color="red">'.$error;
+				echo '<p style="color:red;dislay:block" align="center">'.$error.'</p>';
 			}
 			?>
 	</body>
