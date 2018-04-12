@@ -1,0 +1,19 @@
+body{
+    background-color:rgba(9, 9, 161, 0.829);
+}
+
+.right{
+   position:absolute;
+   top:150px;
+   left: 50px;
+
+
+}
+.left{
+    
+    position:absolute;
+    top:150px;
+    right: 50px;
+ 
+
+}
