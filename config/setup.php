@@ -26,8 +26,7 @@ function setup($dbh,$dbname)
       img_id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
       img_path VARCHAR(255) NOT NULL,
       id int NOT NULL,
-      img_date DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-      CONSTRAINT fk_img_user FOREIGN KEY(id) REFERENCES membres(id)
+      img_date DATETIME NULL DEFAULT CURRENT_TIMESTAMP
 		)";
 	$result = $dbh->exec($sql);
       
